@@ -7,11 +7,14 @@ HELP='usage: filtre path domain [-v]'
 
 ##### Functions
 
+# For debugging purposes, an additional parameter can be used [-v] to enable logging
 function verbose_log (){
   if [ "$VERBOSE" == "1" ]; then
     echo $1
   fi
 }
+
+# Function used to verify that the data path exists
 
 function verify_datapath_exists (){
   if ! [ -d $1 ]; then
@@ -19,7 +22,6 @@ function verify_datapath_exists (){
     exit 1
   fi
 }
-
 
 function validate_data_file (){
   while read line
@@ -35,6 +37,8 @@ function verifyEmailRegex (){
     exit 1
   fi
 }
+
+# Stores the listed usernames in the MATCHES variable
 
 function usernamesForDomain (){
   local FILES=$1/*
@@ -55,9 +59,10 @@ function usernamesForDomain (){
   done
 }
 
+# Removes duplicates and sort entries
+
 function sortAndRemoveDuplicates (){
   MATCHES=$(echo $MATCHES | xargs -n1 | sort -u | xargs)
-  echo $MATCHES
 }
 
 ##### Arguments & Data sanitizing
@@ -65,22 +70,23 @@ function sortAndRemoveDuplicates (){
 if [ $# -gt 2 ]; then
     if [ $# == 3 -a $3 == '-v' ]; then
       VERBOSE=1;
-      echo "Searching for bad users with domain @$2 and data directory $1 in verbose mode"
+      verbose_log "Searching for bad users with domain @$2 and data directory $1 in verbose mode"
     else
       echo "Your command line contains too many arguments."
       echo $HELP
       exit 1
     fi
 
-elif [ $# == 2 ]; then
-    echo "Searching for bad users with domain @$2 and data directory $1"
-else
+elif [ $# -lt 2 ]; then
     echo "Your command line contains not enough arguments"
     echo $HELP
     exit 1
 fi
 
+##### Main execution
+
 DATA_PATH="$EXEC_PATH/$1"
 verify_datapath_exists $DATA_PATH
 usernamesForDomain $DATA_PATH $2
 sortAndRemoveDuplicates $MATCHES
+echo $MATCHES
