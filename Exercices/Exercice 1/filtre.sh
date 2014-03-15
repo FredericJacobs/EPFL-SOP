@@ -65,6 +65,13 @@ function sortAndRemoveDuplicates (){
   MATCHES=$(echo $MATCHES | xargs -n1 | sort -u | xargs)
 }
 
+function returnResults (){
+  for f in $MATCHES
+  do
+    echo $f
+  done
+}
+
 ##### Arguments & Data sanitizing
 
 if [ $# -gt 2 ]; then
@@ -88,5 +95,5 @@ fi
 DATA_PATH="$EXEC_PATH/$1"
 verify_datapath_exists $DATA_PATH
 usernamesForDomain $DATA_PATH $2
-sortAndRemoveDuplicates $MATCHES
-echo $MATCHES
+sortAndRemoveDuplicates
+returnResults
