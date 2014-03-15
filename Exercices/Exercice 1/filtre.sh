@@ -68,19 +68,19 @@ function sortAndRemoveDuplicates (){
 ##### Arguments & Data sanitizing
 
 if [ $# -gt 2 ]; then
-    if [ $# == 3 -a $3 == '-v' ]; then
-      VERBOSE=1;
-      verbose_log "Searching for bad users with domain @$2 and data directory $1 in verbose mode"
-    else
-      echo "Your command line contains too many arguments."
-      echo $HELP
-      exit 1
-    fi
+  if [ $# == 3 -a $3 == '-v' ]; then
+    VERBOSE=1;
+    verbose_log "Searching for bad users with domain @$2 and data directory $1 in verbose mode"
+  else
+    echo "Your command line contains too many arguments."
+    echo $HELP
+  exit 1
+  fi
 
 elif [ $# -lt 2 ]; then
-    echo "Your command line contains not enough arguments"
-    echo $HELP
-    exit 1
+  echo "Your command line contains not enough arguments"
+  echo $HELP
+  exit 1
 fi
 
 ##### Main execution
