@@ -20,14 +20,12 @@ function verify_datapath_exists (){
 # If .htaccess exists, we first verify if the permission is already present.
 
 function addPermission (){
-  echo $1/$FN
   if ! [ -f $1/$FN ]; then
     touch $1/$FN
   fi
 
   for var in "${@:2}"
   do
-    echo "Adding user : $var"
     local USERCONFIG="Require user $var"
 
     if ! grep --quiet "$USERCONFIG" $1/$FN; then

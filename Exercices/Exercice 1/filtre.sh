@@ -15,7 +15,6 @@ function verbose_log (){
 }
 
 # Function used to verify that the data path exists
-
 function verify_datapath_exists (){
   if ! [ -d $1 ]; then
     echo "Datapath doesn't exist!"
@@ -32,8 +31,8 @@ function validate_data_file (){
 
 function verifyEmailRegex (){
   if [ "$1" == ?*@?*.?* ]; then
-    verbose_log "$1 in file $2 is not a valid email address"
-    verbose_log "Filtre expects data files to be lists of email addresses"
+    echo "$1 in file $2 is not a valid email address"
+    echo "Filtre expects data files to be lists of email addresses"
     exit 1
   fi
 }
@@ -48,7 +47,6 @@ function usernamesForDomain (){
       verbose_log "Processing folder $f"
       usernamesForDomain $f $2
     else
-      verbose_log "Processing $f file..."
       validate_data_file $f
       verbose_log "Searching $f for @$2"
       for line in `grep "@$2" $f | cut -d '@' -f 1`
