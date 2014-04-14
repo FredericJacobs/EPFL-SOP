@@ -152,13 +152,25 @@ void display_vm(VM* p_vm){
   puts("--------------------------------------------------");
   puts("Etat de la mémoire :");
 
+  int is = 1;
+
   for (size_t i = 0; i < p_vm->mem_size; i += 1){
     int value = p_vm->mem[i];
-    if (value != 0)
+
+    if(i == 0){
       printf("%zd -> %zd\n", i, value);
+    } else{
+      if (value != 0){
+        printf("%zd -> %zd\n", i, value);
+        is = 1;
+      } else{
+        if(is == 1){
+          puts("...");
+        }
+        is = 0;
+      }
+    }
   }
-
-
 }
 
 void exec_instr(VM* p_vm, Instr* p_i){
