@@ -1,0 +1,10 @@
+      <immeuble
+             from="5"
+                       to="9"
+         h="6"
+                       />
+
+ <immeuble to="8" h="2" from="4"/><immeuble to="2"
+from="1" h="4"/> <immeuble h="2" from="11" to="13" />
+<immeuble from="7"
+to="14" h="3" />
